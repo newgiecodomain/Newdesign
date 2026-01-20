@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeicoUSAOfficial - Get Real-Time Quotes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .text-center { text-align: center; }
+        .grid { display: grid; gap: 30px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        
+        .btn { display: inline-block; padding: 12px 28px; background-color: #0056b3; color: #fff; border-radius: 5px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; }
+        .btn:hover { background-color: #004494; transform: translateY(-2px); }
+        .btn-white { background-color: #fff; color: #0056b3; }
+        .btn-white:hover { background-color: #f0f0f0; }
+
+        /* HEADER */
+        header { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .top-bar { background-color: #0056b3; color: white; text-align: center; padding: 8px 0; font-size: 0.85rem; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: #0056b3; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { font-weight: 500; color: #555; font-size: 1rem; }
+        .nav-links a:hover { color: #0056b3; }
+        .header-phone-btn { background-color: #e6f0fa; color: #0056b3; font-weight: 700; padding: 10px 20px; border-radius: 50px; border: 2px solid #0056b3; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .header-phone-btn:hover { background-color: #0056b3; color: white; box-shadow: 0 4px 10px rgba(0, 86, 179, 0.2); }
+
+        /* HERO & HOME SPECIFIC */
+        .hero { background: linear-gradient(rgba(0, 46, 99, 0.7), rgba(0, 46, 99, 0.7)), url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+        .service-options { display: flex; justify-content: center; gap: 15px; margin: 40px 0; flex-wrap: wrap; }
+        .service-btn { background: rgba(255,255,255,0.15); padding: 12px 30px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.4); color: white; font-weight: 600; cursor: pointer; }
+        .hero-cta-box { background: white; color: #333; max-width: 900px; margin: 50px auto 0; padding: 50px; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        
+        .option-card { background: #fff; padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #eee; display: flex; flex-direction: column; align-items: center; }
+        .option-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+
+        /* PAY BILL */
+        .pay-bill-section { padding: 60px 0; }
+        .pay-bill-box { display: flex; background: linear-gradient(135deg, #0056b3 0%, #003d82 100%); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 60, 130, 0.2); color: white; min-height: 350px; }
+        .pay-bill-content { flex: 1; padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+        .pay-bill-image-container { flex: 1; position: relative; background-color: #fff; }
+        .pay-bill-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* SECTIONS */
+        .stats-section { background-color: #fff; padding: 80px 0; text-align: center; border-top: 1px solid #eee; }
+        .stat-item h2 { font-size: 3rem; color: #0056b3; margin-bottom: 5px; }
+        .features-section { padding: 80px 0; background: #f8f9fa; }
+        .feature-item { padding: 30px; background: white; border-radius: 10px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .feature-icon { width: 70px; height: 70px; background: #e6f0fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #0056b3; margin-bottom: 20px; }
+        .feature-img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 20px; border: 1px solid #eee; }
+
+        /* FAQ */
+        .faq-section { padding: 80px 0; max-width: 800px; margin: 0 auto; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 8px; border: 1px solid #eee; overflow: hidden; }
+        .faq-question { padding: 20px; background: #fff; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .faq-question::after { content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900; transition: transform 0.3s; }
+        .faq-question.active::after { transform: rotate(180deg); }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; background: #fdfdfd; transition: max-height 0.3s ease-out, padding 0.3s ease; }
+        .faq-answer.show { padding: 20px; max-height: 500px; border-top: 1px solid #f0f0f0; }
+
+        /* FOOTER & DISCLAIMER */
+        .disclaimer { font-size: 0.85rem; color: #888; padding: 50px 20px; text-align: center; background: #f1f1f1; border-top: 1px solid #ddd; }
+        footer { background: #1a1a1a; color: #aaa; padding: 60px 0 30px; }
+        footer h4 { color: white; margin-bottom: 25px; }
+        footer a:hover { color: white; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; }
+        .copyright { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .grid-2, .pay-bill-box { flex-direction: column; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .pay-bill-image-container { min-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="top-bar"><i class="far fa-clock"></i> Monday: 10:00 AM – Saturday: 7:00 PM</div>
+    <div class="container nav-container">
+        <a href="index.html" class="logo"><i class="fas fa-car-side"></i> Geico<span style="color:#333">USAOfficial</span></a>
+        <nav class="nav-links">
+            <a href="index.html" style="color:#0056b3;">Home</a>
+            <a href="geico.html">Geico</a>
+            <a href="statefarm.html">Statefarm</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+        <a href="tel:8003305946" class="header-phone-btn"><i class="fas fa-phone-alt"></i> (800) 330-5946</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Get Car Insurance Quotes in Real-Time</h1>
+        <p>Save on your bills with smart protection.</p>
+        <div class="service-options">
+            <div class="service-btn">Auto</div><div class="service-btn">Bundle</div><div class="service-btn">Home</div><div class="service-btn">Renters</div><div class="service-btn">Pet</div>
+        </div>
+        <div class="hero-cta-box">
+            <h2>Do it yourself or Get a Consultation</h2>
+            <div class="grid grid-2" style="margin-top:20px;">
+                <div class="option-card">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="DIY" class="option-img">
+                    <h3>Do it yourself</h3>
+                    <p>Compare quotes online instantly.</p>
+                    <a href="tel:8003305946" class="btn">Call Now</a>
+                </div>
+                <div class="option-card">
+                    <img src="https://images.pexels.com/photos/8867434/pexels-photo-8867434.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Agent" class="option-img">
+                    <h3>Live Agent</h3>
+                    <p>Get tailored advice from experts.</p>
+                    <a href="tel:8003305946" class="btn">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container pay-bill-section">
+    <div class="pay-bill-box">
+        <div class="pay-bill-content">
+            <h2><i class="fas fa-credit-card"></i> Pay Your Bill</h2>
+            <p>Securely manage your policy payments online. Fast, easy, and reliable billing support.</p>
+            <a href="tel:8003305946" class="btn btn-white">Call To Pay</a>
+        </div>
+        <div class="pay-bill-image-container">
+            <img src="https://images.unsplash.com/photo-1556742031-c6961e8560b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pay Bill">
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="container">
+        <h2>Transforming Insurance Shopping for Over a Decade</h2>
+        <div class="grid grid-3" style="margin-top:40px;">
+            <div class="stat-item"><h2>#1</h2><p>Trusted Service</p></div>
+            <div class="stat-item"><h2>30M+</h2><p>Quotes Compared</p></div>
+            <div class="stat-item"><h2>$48M</h2><p>In Total Savings</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container">
+        <h2 class="text-center" style="margin-bottom: 50px;">On the spot assistance from expert advisors</h2>
+        <div class="grid grid-3">
+            <div class="feature-item text-center">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Trusted Experts</h3>
+                <p>Skilled professionals to simplify insurance.</p>
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80" alt="Team" class="feature-img">
+            </div>
+            <div class="feature-item text-center">
+                <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3>Personalized Guidance</h3>
+                <p>Unbiased advice tailored to your life.</p>
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Guidance" class="feature-img">
+            </div>
+            <div class="feature-item text-center">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Instant Assistance</h3>
+                <p>We are always within reach by phone.</p>
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Support" class="feature-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="background: #0056b3; color: white; text-align: center; padding: 60px 20px;">
+    <h2>Ready to talk? Our agents are here to help.</h2>
+    <p style="font-size: 1.3rem; margin-top: 15px; font-weight: 600;"><i class="fas fa-phone-alt"></i> (800) 330-5946</p>
+</div>
+
+<section class="faq-section">
+    <h2 class="text-center" style="margin-bottom: 40px;">Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <div class="faq-question">How can I save money on my insurance?</div>
+        <div class="faq-answer">By comparing quotes from multiple insurers on GeicoUSAOfficial, you can easily identify the best coverage options at the lowest prices.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Does comparing quotes affect my credit score?</div>
+        <div class="faq-answer">No. Comparing quotes on GeicoUSAOfficial does not impact your credit score. We only perform a soft check.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">How long does it take to get an insurance quote?</div>
+        <div class="faq-answer">It takes just a few minutes! Simply enter some basic information about yourself and your coverage needs.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Can I switch my insurance provider anytime?</div>
+        <div class="faq-answer">Yes. You can switch providers at any time if you find a better rate or coverage option. GeicoUSAOfficial helps you compare current plans and guides you through the switching process smoothly.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Are the quotes on GeicoUSAOfficial accurate?</div>
+        <div class="faq-answer">Yes. The quotes you see are directly provided by trusted insurance partners based on your input details. However, final pricing may vary slightly after complete verification of your information.</div>
+    </div>
+</section>
+
+<div class="disclaimer">
+    <div class="container">
+        <p>This is not the official website of any other insurance provider. The website is independently operated by <a href="https://geicousaofficial.com" style="color:#0056b3; font-weight:bold;">geicousaofficial.com</a>, an authorized retail partner that facilitates connections between customers and licensed insurance providers. All company names, trademarks, service marks, and logos displayed on this site are the exclusive property of their respective owners and are used solely for identification and informational purposes related to the products and services offered by those organizations. The display of third-party branding does not imply ownership, control, or direct partnership beyond authorized retail representation. All information provided on this website is intended for general awareness and should not be construed as a binding offer or guarantee of service. Prices, promotions, and service availability are subject to change without prior notice, and <a href="https://geicousaofficial.com" style="color:#0056b3; font-weight:bold;">geicousaofficial.com</a> may send updates or notifications to the email address or mobile number provided during registration.</p>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4 style="display:flex; align-items:center; gap:10px;"><i class="fas fa-car-side"></i> GeicoUSAOfficial</h4>
+                <p>Reliable auto insurance solutions designed to protect you on every journey.</p>
+                <br>
+                <div style="display:flex; gap:15px;">
+                    <a href="#"><i class="fab fa-facebook fa-lg"></i></a><a href="#"><i class="fab fa-twitter fa-lg"></i></a><a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul><li><a href="index.html">Home</a></li><li><a href="geico.html">Geico</a></li><li><a href="statefarm.html">Statefarm</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul>
+            </div>
+            <div>
+                <h4>Get In Touch</h4>
+                <ul style="list-style: none;"><li><i class="fas fa-envelope"></i> sales@geicousaofficial.com</li><li><a href="tel:8003305946"><i class="fas fa-phone-alt"></i> (800) 330-5946</a></li><li><i class="fas fa-map-marker-alt"></i> USA</li></ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 All Rights Reserved Geicousaofficial. <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms And Conditions</a> | <a href="insurance-policy.html">Insurance Policy</a></p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active');
+            const answer = item.nextElementSibling;
+            if (answer.classList.contains('show')) { answer.classList.remove('show'); } else { answer.classList.add('show'); }
+        });
+    });
+</script>
+</body>
+</html>
